@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState, useEffect} from 'react';
+import RandomCat from './Components/RandomCat';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App()  {
+  const [fact, setFact] = useState("")
+  const url = 'https://cat-fact.herokuapp.com/facts/random'
+
+  useEffect(() => {
+    fetchData()
+  },[]);
+
+
+
+  const fetchData = async () => {
+    const respond = await fetch(url);
+    const data = await respond.json();
+    data && setFact(data.text);
+  }
+
+return (
+  <RandomCat fact={fact}/>
+)
+
 }
 
 export default App;
